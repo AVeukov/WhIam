@@ -1,0 +1,764 @@
+{
+"nameScheme": "Кубинская СОШ №1",
+  "width": 180,
+  "height": 210,
+  "scale": 5.0,
+  "lineWidth": 5.0,
+  "textSize": 20.0,
+  "buildings": [
+    {
+      "nameBuilding": "Основное здание",
+      "floors": [
+        {
+          "nameFloor": "4-ый этаж",
+          "partitions": [
+            {
+              "walls": [27, 27, 54, 27],
+              "doors": []
+            },
+            {
+              "walls": [99, 62, 99, 70],
+              "doors": [99, 64, 99, 68]
+            },
+            {
+              "walls": [99, 92, 99, 110],
+              "doors": []
+            },
+            {
+              "walls": [155, 150, 155, 180],
+              "doors": []
+            }
+          ],
+          "halls": [
+            {
+              "walls": [27, 27, 80, 70]
+            },
+            {
+              "walls": [80, 56, 130, 70]
+            },
+            {
+              "walls": [99, 70, 130, 110]
+            },
+            {
+              "walls": [110, 110, 155, 180]
+            }
+          ],
+          "stairs": [
+            {
+              "walls": [65, 27, 73, 37],
+              "vertical": false,
+              "node": 4005
+            },
+            {
+              "walls": [99, 96, 110, 110],
+              "vertical": true,
+              "node": 4011
+            },
+            {
+              "walls": [110, 96, 120, 110],
+              "vertical": true,
+              "node": 4011
+            },
+            {
+              "walls": [145, 120, 155, 128],
+              "vertical": true,
+              "node": 4018
+            }
+          ],
+          "rooms": [
+            {
+              "nameRoom": "4.20",
+              "descriptionRoom": "Кабинет географии",
+              "typeRoom": "CLASS",
+              "walls": [0, 0, 27, 32],
+              "doors": [27, 28, 27, 31],
+              "node": 4001
+            },
+            {
+              "nameRoom": "4.21",
+              "descriptionRoom": "Кабинет истории",
+              "typeRoom": "CLASS",
+              "walls": [0, 32, 27, 64],
+              "doors": [27, 58, 27, 61],
+              "node": 4002
+            },
+            {
+              "nameRoom": "4.22",
+              "descriptionRoom": "Кабинет ",
+              "typeRoom": "CLASS",
+              "walls": [0, 64, 27, 98],
+              "doors": [27, 66, 27, 69],
+              "node": 4002
+            },
+            {
+              "nameRoom": "4.23",
+              "descriptionRoom": "Кабинет английский 1",
+              "typeRoom": "CLASS",
+              "walls": [27, 70, 48, 98],
+              "doors": [40, 70, 44, 70],
+              "node": 4003
+            },
+            {
+              "nameRoom": "4.24",
+              "descriptionRoom": "Кабинет английский 2",
+              "typeRoom": "CLASS",
+              "walls": [48, 70, 62, 98],
+              "doors": [50, 70, 54, 70],
+              "node": 4004
+            },
+            {
+              "nameRoom": "4.25",
+              "descriptionRoom": "Кабинет английский 3",
+              "typeRoom": "CLASS",
+              "walls": [62, 70, 89, 98],
+              "doors": [74, 70, 78, 70],
+              "node": 4006
+            },
+            {
+              "nameRoom": "4.26",
+              "descriptionRoom": "Завуч",
+              "typeRoom": "CLASS",
+              "walls": [89, 70, 99, 93],
+              "doors": [99, 73, 99, 77],
+              "node": 4007
+            },
+            {
+              "nameRoom": "4.19",
+              "descriptionRoom": "Кабинет математики",
+              "typeRoom": "CLASS",
+              "walls": [54, 0, 80, 27],
+              "doors": [56, 27, 59, 27],
+              "node": 4005
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [61, 27, 80, 37],
+              "doors": [61, 30, 61, 34]
+            },
+            {
+              "nameRoom": "4.18",
+              "descriptionRoom": "Техническое помещение",
+              "typeRoom": "CLASS",
+              "walls": [61, 37, 80, 44],
+              "doors": [61, 39, 61, 42],
+              "node": 4005
+            },
+            {
+              "nameRoom": "4.16",
+              "descriptionRoom": "Туалет М",
+              "typeRoom": "CLASS",
+              "walls": [61, 44, 70, 57],
+              "doors": [64, 57, 67, 57],
+              "node": 4006
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [61, 57, 70, 62],
+              "doors": [64, 62, 67, 62],
+              "node": 4006
+            },
+            {
+              "nameRoom": "4.15",
+              "descriptionRoom": "Туалет Ж",
+              "typeRoom": "CLASS",
+              "walls": [70, 44, 80, 57],
+              "doors": [75, 57, 79, 57],
+              "node": 4006
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [70, 57, 80, 62],
+              "doors": [74, 62, 78, 62],
+              "node": 4006
+            },
+            {
+              "nameRoom": "4.14",
+              "descriptionRoom": "Кабинет химии 1",
+              "typeRoom": "CLASS",
+              "walls": [80, 32, 120, 62],
+              "doors": [113,62,117,62],
+              "node": 4008
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [120, 32, 130, 45],
+              "doors": [120, 38, 120, 42],
+              "node": 4008
+            },
+            {
+              "nameRoom": "4.13",
+              "descriptionRoom": "Техничекое помещение",
+              "typeRoom": "CLASS",
+              "walls": [120, 45, 130, 56],
+              "doors": [123, 56, 127, 56],
+              "node": 4010
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [130, 32, 151, 62],
+              "doors": [130, 57, 130, 61],
+              "node": 4010
+            },
+            {
+              "nameRoom": "4.12",
+              "descriptionRoom": "Кабинет химии 2",
+              "typeRoom": "CLASS",
+              "walls": [130, 62, 151, 100],
+              "doors": [130, 66, 130, 70],
+              "node": 4009
+            },
+            {
+              "nameRoom": "4.11",
+              "descriptionRoom": "Психолог",
+              "typeRoom": "CLASS",
+              "walls": [130, 100, 145, 110],
+              "doors": [130, 103, 130, 107],
+              "node": 4012
+            },
+            {
+              "nameRoom": "4.10",
+              "descriptionRoom": "Туалет М",
+              "typeRoom": "CLASS",
+              "walls": [130, 110, 140, 123],
+              "doors": [130, 116, 130, 120],
+              "node": 4013
+            },
+            {
+              "nameRoom": "4.09",
+              "descriptionRoom": "Туалет Ж",
+              "typeRoom": "CLASS",
+              "walls": [130, 123, 140, 139],
+              "doors": [130, 128, 130, 132],
+              "node": 4014
+            },
+            {
+              "nameRoom": "4.07",
+              "descriptionRoom": "Техническое помещение",
+              "typeRoom": "CLASS",
+              "walls": [140, 110, 145, 139],
+              "doors": [142, 139, 144, 139],
+              "node": 4018
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [145, 110, 155, 139],
+              "doors": [148, 139, 152, 139],
+              "node": 4018
+            },
+            {
+              "nameRoom": "4.06",
+              "descriptionRoom": "Кабинет физики",
+              "typeRoom": "CLASS",
+              "walls": [155, 110, 173, 150],
+              "doors": [155, 143, 155, 147],
+              "node": 4018
+            },
+            {
+              "nameRoom": "4.01",
+              "descriptionRoom": "Кабинет русского языка и литературы",
+              "typeRoom": "CLASS",
+              "walls": [92, 110, 120, 159],
+              "doors": [120, 141, 120, 145],
+              "node": 4015
+            },
+            {
+              "nameRoom": "4.02",
+              "descriptionRoom": "Кабинет математики 1",
+              "typeRoom": "CLASS",
+              "walls": [92, 159, 120, 180],
+              "doors": [120, 172, 120, 176],
+              "node": 4016
+            },
+            {
+              "nameRoom": "4.03",
+              "descriptionRoom": "Кабинет математики 2",
+              "typeRoom": "CLASS",
+              "walls": [92, 180, 126, 210],
+              "doors": [122, 180, 124, 180],
+              "node": 4016
+            },
+            {
+              "nameRoom": "4.04",
+              "descriptionRoom": "Кабинет математики 3",
+              "typeRoom": "CLASS",
+              "walls": [126, 180, 148, 210],
+              "doors": [141, 180, 145, 180],
+              "node": 4017
+            },
+            {
+              "nameRoom": "4.05",
+              "descriptionRoom": "Кабинет математики 4",
+              "typeRoom": "CLASS",
+              "walls": [148, 180, 172, 210],
+              "doors": [150, 180, 154, 180],
+              "node": 4017
+            }
+          ],
+          "nodes": [
+            {
+              "id": 4001,
+              "xy": [30,30],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4002,
+              "xy": [30,60],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4003,
+              "xy": [42,68],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4004,
+              "xy": [52,68],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4005,
+              "xy": [55,35],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4006,
+              "xy": [75,67],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4007,
+              "xy": [100,175],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4008,
+              "xy": [115,67],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4009,
+              "xy": [125,69],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4010,
+              "xy": [125,58],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4011,
+              "xy": [110,95],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4012,
+              "xy": [125,105],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4013,
+              "xy": [125,118],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4014,
+              "xy": [125,133],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4015,
+              "xy": [125,144],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4016,
+              "xy": [125,175],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4017,
+              "xy": [145,175],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            },
+            {
+              "id": 4018,
+              "xy": [145,145],
+              "wifi": [
+                {
+                  "mac":"",
+                  "dBm": "-43"
+                }
+              ]
+            }
+          ],
+          "edges": [
+            [4001,4002],
+            [4002,4003]
+          ]
+        },
+        {
+          "nameFloor": "3-ий этаж",
+          "partitions": [
+            {
+              "walls": [27, 27, 54, 27],
+              "doors": []
+            },
+            {
+              "walls": [99, 62, 99, 70],
+              "doors": [99, 64, 99, 68]
+            },
+            {
+              "walls": [99, 92, 99, 110],
+              "doors": []
+            },
+            {
+              "walls": [155, 150, 155, 180],
+              "doors": []
+            }
+          ],
+          "halls": [
+            {
+              "walls": [27, 27, 80, 70]
+            },
+            {
+              "walls": [80, 56, 130, 70]
+            },
+            {
+              "walls": [99, 70, 130, 110]
+            },
+            {
+              "walls": [110, 110, 155, 180]
+            }
+          ],
+          "stairs": [
+            {
+              "walls": [65, 27, 73, 37],
+              "vertical": false
+            },
+            {
+              "walls": [99, 96, 110, 110],
+              "vertical": true
+            },
+            {
+              "walls": [110, 96, 120, 110],
+              "vertical": true
+            },
+            {
+              "walls": [145, 120, 155, 128],
+              "vertical": true
+            }
+          ],
+          "rooms": [
+            {
+              "nameRoom": "3.20",
+              "descriptionRoom": "Кабинет географии",
+              "typeRoom": "CLASS",
+              "walls": [0, 0, 27, 32],
+              "doors": [27, 28, 27, 31]
+            },
+            {
+              "nameRoom": "3.21",
+              "descriptionRoom": "Кабинет истории",
+              "typeRoom": "CLASS",
+              "walls": [0, 32, 27, 64],
+              "doors": [27, 58, 27, 61]
+            },
+            {
+              "nameRoom": "3.22",
+              "descriptionRoom": "Кабинет ",
+              "typeRoom": "CLASS",
+              "walls": [0, 64, 27, 98],
+              "doors": [27, 66, 27, 69]
+            },
+            {
+              "nameRoom": "3.23",
+              "descriptionRoom": "Кабинет английский 1",
+              "typeRoom": "CLASS",
+              "walls": [27, 70, 48, 98],
+              "doors": [40, 70, 44, 70]
+            },
+            {
+              "nameRoom": "3.24",
+              "descriptionRoom": "Кабинет английский 2",
+              "typeRoom": "CLASS",
+              "walls": [48, 70, 62, 98],
+              "doors": [50, 70, 54, 70]
+            },
+            {
+              "nameRoom": "3.25",
+              "descriptionRoom": "Кабинет английский 3",
+              "typeRoom": "CLASS",
+              "walls": [62, 70, 89, 98],
+              "doors": [74, 70, 78, 70]
+            },
+            {
+              "nameRoom": "3.26",
+              "descriptionRoom": "Завуч",
+              "typeRoom": "CLASS",
+              "walls": [89, 70, 99, 93],
+              "doors": [99, 73, 99, 77]
+            },
+            {
+              "nameRoom": "3.19",
+              "descriptionRoom": "Кабинет математики",
+              "typeRoom": "CLASS",
+              "walls": [54, 0, 80, 27],
+              "doors": [56, 27, 59, 27]
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [61, 27, 80, 37],
+              "doors": [61, 30, 61, 34]
+            },
+            {
+              "nameRoom": "3.18",
+              "descriptionRoom": "Техническое помещение",
+              "typeRoom": "CLASS",
+              "walls": [61, 37, 80, 44],
+              "doors": [61, 39, 61, 42]
+            },
+            {
+              "nameRoom": "3.16",
+              "descriptionRoom": "Туалет М",
+              "typeRoom": "CLASS",
+              "walls": [61, 44, 70, 57],
+              "doors": [64, 57, 67, 57]
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [61, 57, 70, 62],
+              "doors": [64, 62, 67, 62]
+            },
+            {
+              "nameRoom": "3.15",
+              "descriptionRoom": "Туалет Ж",
+              "typeRoom": "CLASS",
+              "walls": [70, 44, 80, 57],
+              "doors": [75, 57, 79, 57]
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [70, 57, 80, 62],
+              "doors": [74, 62, 78, 62]
+            },
+            {
+              "nameRoom": "3.14",
+              "descriptionRoom": "Кабинет химии 1",
+              "typeRoom": "CLASS",
+              "walls": [80, 32, 120, 62],
+              "doors": [113,62,117,62]
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [120, 32, 130, 45],
+              "doors": [120, 38, 120, 42]
+            },
+            {
+              "nameRoom": "3.13",
+              "descriptionRoom": "Техничекое помещение",
+              "typeRoom": "CLASS",
+              "walls": [120, 45, 130, 56],
+              "doors": [123, 56, 127, 56]
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [130, 32, 151, 62],
+              "doors": [130, 57, 130, 61]
+            },
+            {
+              "nameRoom": "3.12",
+              "descriptionRoom": "Кабинет химии 2",
+              "typeRoom": "CLASS",
+              "walls": [130, 62, 151, 100],
+              "doors": [130, 66, 130, 70]
+            },
+            {
+              "nameRoom": "3.11",
+              "descriptionRoom": "Психолог",
+              "typeRoom": "CLASS",
+              "walls": [130, 100, 145, 110],
+              "doors": [130, 103, 130, 107]
+            },
+            {
+              "nameRoom": "3.10",
+              "descriptionRoom": "Туалет М",
+              "typeRoom": "CLASS",
+              "walls": [130, 110, 140, 123],
+              "doors": [130, 116, 130, 120]
+            },
+            {
+              "nameRoom": "3.09",
+              "descriptionRoom": "Туалет Ж",
+              "typeRoom": "CLASS",
+              "walls": [130, 123, 140, 139],
+              "doors": [130, 128, 130, 132]
+            },
+            {
+              "nameRoom": "3.07",
+              "descriptionRoom": "Техническое помещение",
+              "typeRoom": "CLASS",
+              "walls": [140, 110, 145, 139],
+              "doors": [142, 139, 144, 139]
+            },
+            {
+              "nameRoom": "",
+              "descriptionRoom": "",
+              "typeRoom": "CLASS",
+              "walls": [145, 110, 155, 139],
+              "doors": [148, 139, 152, 139]
+            },
+            {
+              "nameRoom": "3.06",
+              "descriptionRoom": "Кабинет физики",
+              "typeRoom": "CLASS",
+              "walls": [155, 110, 173, 150],
+              "doors": [155, 143, 155, 147]
+            },
+            {
+              "nameRoom": "3.01",
+              "descriptionRoom": "Кабинет русского языка и литературы",
+              "typeRoom": "CLASS",
+              "walls": [92, 110, 120, 159],
+              "doors": [120, 141, 120, 145]
+            },
+            {
+              "nameRoom": "3.02",
+              "descriptionRoom": "Кабинет математики 1",
+              "typeRoom": "CLASS",
+              "walls": [92, 159, 120, 180],
+              "doors": [120, 172, 120, 176]
+            },
+            {
+              "nameRoom": "3.03",
+              "descriptionRoom": "Кабинет математики 2",
+              "typeRoom": "CLASS",
+              "walls": [92, 180, 126, 210],
+              "doors": [122, 180, 124, 180]
+            },
+            {
+              "nameRoom": "3.04",
+              "descriptionRoom": "Кабинет математики 3",
+              "typeRoom": "CLASS",
+              "walls": [126, 180, 148, 210],
+              "doors": [141, 180, 145, 180]
+            },
+            {
+              "nameRoom": "3.05",
+              "descriptionRoom": "Кабинет математики 4",
+              "typeRoom": "CLASS",
+              "walls": [148, 180, 172, 210],
+              "doors": [150, 180, 154, 180]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

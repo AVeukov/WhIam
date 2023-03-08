@@ -1,0 +1,98 @@
+
+
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory>
+        <ListPreference
+            app:defaultValue="@string/scan_speed_default"
+            app:entries="@array/scan_speed_array"
+            app:entryValues="@array/scan_speed_array"
+            app:icon="@drawable/ic_fast_forward"
+            app:key="@string/scan_speed_key"
+            app:persistent="true"
+            app:summary="@string/scan_speed_summary"
+            app:useSimpleSummaryProvider="true"
+            app:title="@string/scan_speed_title"/>
+    </PreferenceCategory>
+
+<!--    <PreferenceCategory>-->
+<!--        <ListPreference-->
+<!--            app:defaultValue="@string/sort_by_default"-->
+<!--            app:entries="@array/sort_by_array"-->
+<!--            app:entryValues="@array/sort_by_index_array"-->
+<!--            app:icon="@drawable/ic_sort"-->
+<!--            app:key="@string/sort_by_key"-->
+<!--            app:persistent="true"-->
+<!--            app:summary="@string/sort_by_summary"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            app:title="@string/sort_by_title"/>-->
+<!--    </PreferenceCategory>-->
+
+<!--    <PreferenceCategory>-->
+<!--        <ListPreference-->
+<!--            app:defaultValue="@string/connection_view_default"-->
+<!--            app:entries="@array/connection_view_array"-->
+<!--            app:entryValues="@array/connection_view_index_array"-->
+<!--            app:icon="@drawable/ic_view_carousel"-->
+<!--            app:key="@string/connection_view_key"-->
+<!--            app:persistent="true"-->
+<!--            app:summary="@string/connection_view_summary"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            app:title="@string/connection_view_title"/>-->
+
+<!--        <ListPreference-->
+<!--            app:defaultValue="@string/ap_view_default"-->
+<!--            app:entries="@array/ap_view_array"-->
+<!--            app:entryValues="@array/ap_view_index_array"-->
+<!--            app:icon="@drawable/ic_view_carousel"-->
+<!--            app:key="@string/ap_view_key"-->
+<!--            app:persistent="true"-->
+<!--            app:summary="@string/ap_view_summary"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            app:title="@string/ap_view_title"/>-->
+<!--    </PreferenceCategory>-->
+    <PreferenceCategory>
+        <ListPreference
+            app:defaultValue="@string/theme_default"
+            app:entries="@array/theme_array"
+            app:entryValues="@array/theme_index_array"
+            app:icon="@drawable/ic_color_lens"
+            app:key="@string/theme_key"
+            app:persistent="true"
+            app:summary="@string/theme_summary"
+            app:useSimpleSummaryProvider="true"
+            app:title="@string/theme_title"/>
+
+<!--        <androidx.preference.SwitchPreferenceCompat-->
+<!--            app:defaultValue="@bool/wifi_off_on_exit_default"-->
+<!--            app:icon="@drawable/ic_signal_wifi_off"-->
+<!--            app:key="@string/wifi_off_on_exit_key"-->
+<!--            app:title="@string/wifi_off_on_exit_title"/>-->
+
+        <androidx.preference.SwitchPreferenceCompat
+            app:defaultValue="@bool/keep_screen_on_default"
+            app:icon="@drawable/ic_brightness_low"
+            app:key="@string/keep_screen_on_key"
+            app:title="@string/keep_screen_on_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+<!--        <ru.veyukov.arseniy.whiam.settings.CountryPreference-->
+<!--            app:icon="@drawable/ic_location_on"-->
+<!--            app:key="@string/country_code_key"-->
+<!--            app:persistent="true"-->
+<!--            app:summary="@string/country_code_summary"-->
+<!--            app:useSimpleSummaryProvider="true"-->
+<!--            app:title="@string/country_code_title" />-->
+
+        <ru.veyukov.arseniy.whiam.settings.LanguagePreference
+            app:icon="@drawable/ic_language"
+            app:key="@string/language_key"
+            app:persistent="true"
+            app:summary="@string/language_summary"
+            app:useSimpleSummaryProvider="true"
+            app:title="@string/language_title" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

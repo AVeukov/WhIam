@@ -1,0 +1,197 @@
+
+
+apply plugin: "com.android.application"
+
+apply from: "jacoco.gradle"
+apply plugin: 'kotlin-android'
+apply plugin: "kotlin-allopen"
+
+// dependencies -------------------------------------------------
+dependencies {
+    // Compile Build Dependencies
+    implementation fileTree(include: ["*.jar"], dir: "libs")
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.annotation:annotation:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.collection:collection-ktx:1.2.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.core:core-splashscreen:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation 'androidx.media:media:1.6.0'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.jjoe64:graphview:4.2.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    // Unit Test Dependencies
+    testImplementation 'androidx.test.ext:junit:1.1.4'
+    testImplementation 'com.googlecode.junit-toolbox:junit-toolbox:2.4'
+    testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0'
+    testImplementation 'io.mockk:mockk:1.13.3'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:4.10.0'
+    testImplementation 'org.robolectric:robolectric:4.9.1'
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+    // Android Test Dependencies
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit-ktx:1.1.4'
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+android {
+    namespace 'ru.veyukov.arseniy.whiam'
+    compileSdkVersion 33
+    buildToolsVersion '33.0.1'
+
+    sourceSets.each {
+        it.java.srcDirs += "src/$it.name/kotlin"
+    }
+
+    defaultConfig {
+        applicationId "ru.veyukov.arseniy.whiam"
+        minSdkVersion 23
+        targetSdkVersion 33
+        versionCode
+        versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile("proguard-android.txt")
+            signingConfig
+        }
+        debug {
+            applicationIdSuffix ".BETA"
+            versionNameSuffix "-BETA"
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            testCoverageEnabled true
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources true
+            all {
+                testLogging {
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
+                    outputs.upToDateWhen { false }
+                    showStandardStreams = true
+                }
+                jvmArgs '-noverify'
+            }
+        }
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    lint {
+        disable 'GoogleAppIndexingWarning'
+    }
+}
+
+allOpen {
+    annotation("com.vrem.annotation.OpenClass")
+}
+
+// keystore -------------------------------------------------
+if (project.hasProperty("keyAlias")) {
+    def propertiesFile = file("../../keystores/androidkeystore.properties")
+    Properties properties = readProperties(propertiesFile)
+
+    System.out.println(">>> Signing Config " + properties)
+    android.buildTypes.release.signingConfig.keyAlias = properties["key_alias"].toString()
+    android.buildTypes.release.signingConfig.keyPassword = properties["key_password"].toString()
+    android.buildTypes.release.signingConfig.storeFile = file(properties["store_filename"].toString())
+    android.buildTypes.release.signingConfig.storePassword = properties["store_password"].toString()
+}
+
+// version -------------------------------------------------
+updateVersion()
+
+def updateVersion() {
+    def propertiesFile = file("build.properties")
+    Properties properties = readProperties(propertiesFile)
+
+    def versionMajor = properties["version_major"].toString().toInteger()
+    def versionMinor = properties["version_minor"].toString().toInteger()
+    def versionPatch = properties["version_patch"].toString().toInteger()
+    def versionBuild = properties["version_build"].toString().toInteger()
+    def versionStore = properties["version_store"].toString().toInteger()
+
+    if (isReleaseTask()) {
+        System.out.println(">>> Building Release...")
+        versionPatch++
+        versionStore++
+        versionBuild = 0
+        properties["version_patch"] = versionPatch.toString()
+        properties["version_store"] = versionStore.toString()
+        properties["version_build"] = versionBuild.toString()
+        writeProperties(propertiesFile, properties)
+    }
+    if (isTestTask()) {
+        System.out.println(">>> Running Tests...")
+        versionBuild++
+        properties["version_build"] = versionBuild.toString()
+        writeProperties(propertiesFile, properties)
+    }
+
+    def versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
+    def applicationId = android.defaultConfig.applicationId
+    if (!isReleaseTask()) {
+        versionName = versionName + ".${versionBuild}"
+        applicationId = applicationId + android.buildTypes.debug.applicationIdSuffix
+    }
+    System.out.println(">>> " + project.parent.name + " " + versionName + " (" + versionStore + ") " + applicationId)
+    android.defaultConfig.versionCode = versionStore
+    android.defaultConfig.versionName = versionName
+}
+
+def isTestTask() {
+    def tasks = gradle.getStartParameter().getTaskNames()
+    return ":app:testDebugUnitTest" in tasks || "testDebugUnitTest" in tasks ||
+            ":app:testReleaseUnitTest" in tasks || "testReleaseUnitTest" in tasks
+}
+
+def isReleaseTask() {
+    def tasks = gradle.getStartParameter().getTaskNames()
+    return ":app:assembleRelease" in tasks || "assembleRelease" in tasks ||
+            ":app:bundleRelease" in tasks || "bundleRelease" in tasks
+}
+
+static Properties readProperties(propertiesFile) {
+    if (propertiesFile.canRead()) {
+        Properties properties = new Properties()
+        def inputStream = new FileInputStream(propertiesFile)
+        properties.load(inputStream)
+        inputStream.close()
+        return properties
+    } else {
+        def message = ">>> Could not read " + propertiesFile.name + " file!"
+        System.err.println(message)
+        throw new RuntimeException(message)
+    }
+}
+
+def static writeProperties(propertiesFile, properties) {
+    def writer = propertiesFile.newWriter()
+    properties.store(writer, "Build Properties")
+    writer.close()
+}
