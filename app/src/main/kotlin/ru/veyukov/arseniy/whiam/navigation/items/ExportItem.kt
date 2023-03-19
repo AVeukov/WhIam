@@ -10,17 +10,17 @@ import ru.veyukov.arseniy.whiam.MainContext
 import ru.veyukov.arseniy.whiam.R
 import ru.veyukov.arseniy.whiam.export.Export
 import ru.veyukov.arseniy.whiam.navigation.NavigationMenu
-import ru.veyukov.arseniy.whiam.wifi.model.WiFiDetail
+import ru.veyukov.arseniy.whiam.scheme.data.NodeData
 
 internal class ExportItem(private val export: Export) : NavigationItem {
 
     override fun activate(mainActivity: MainActivity, menuItem: MenuItem, navigationMenu: NavigationMenu) {
-        val wiFiDetails: List<WiFiDetail> = MainContext.INSTANCE.scannerService.wiFiData().wiFiDetails
-        if (wiFiDetails.isEmpty()) {
+        val nodes: List<NodeData> = MainContext.INSTANCE.scheme.nodeList
+        if (nodes.isEmpty()) {
             Toast.makeText(mainActivity, R.string.no_data, Toast.LENGTH_LONG).show()
             return
         }
-        val intent: Intent = export.export(mainActivity, wiFiDetails)
+        val intent: Intent = export.export(mainActivity, nodes)
         if (!exportAvailable(mainActivity, intent)) {
             Toast.makeText(mainActivity, R.string.export_not_available, Toast.LENGTH_LONG).show()
             return

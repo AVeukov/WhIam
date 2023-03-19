@@ -11,6 +11,7 @@
     <string name="navigation_drawer_close">"Закрыть панель навигации"</string>
     <string name="scanner_message">"Сканирование &#8230;"</string>
     <string name="scanner_pause">"Приостановить"</string>
+    <string name="scanner_path">"Путь"</string>
     <string name="scanner_play">"Воспроизвести"</string>
 
     <!-- action start -->
@@ -87,6 +88,9 @@
     <string name="keep_screen_on_title">"Экран всегда включен"</string>
 
     <string name="language_title">"Язык"</string>
+
+    <string name="wifi_data_collection_title">"Сбор данных Wi-Fi"</string>
+    <string name="wifi_data_clear_title">"Очистить Wi-Fi данные"</string>
     <!-- settings end -->
 
     <!-- about start -->

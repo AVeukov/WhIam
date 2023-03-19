@@ -1,18 +1,8 @@
 package ru.veyukov.arseniy.whiam.scheme
 
-import android.content.Context
-import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Rect
-import android.view.GestureDetector
-import android.view.MotionEvent
-import android.view.ScaleGestureDetector
-import android.view.View
-import android.widget.Toast
-import androidx.core.view.GestureDetectorCompat
-import ru.veyukov.arseniy.whiam.MainContext
-import java.util.*
+import ru.veyukov.arseniy.whiam.scheme.data.SchemeData
 
 class SchemeViewPaints(schemeData: SchemeData) {
     private val schemeData = schemeData
@@ -75,7 +65,7 @@ class SchemeViewPaints(schemeData: SchemeData) {
         pathPaint.strokeJoin = Paint.Join.ROUND
         pathPaint.strokeCap = Paint.Cap.ROUND
         pathPaint.strokeWidth = schemeData.lineWidth * 10
-        pathPaint.alpha = 70
+        pathPaint.alpha = 40
     }
     val textPaint: Paint = Paint()
         get() = field
@@ -93,7 +83,10 @@ class SchemeViewPaints(schemeData: SchemeData) {
         tempPaint.isAntiAlias = true
         tempPaint.isDither = true
         tempPaint.color = Color.RED
-        tempPaint.style = Paint.Style.FILL
+        tempPaint.style = Paint.Style.FILL_AND_STROKE
         tempPaint.textSize = 50F
+        selectedPaint.strokeJoin = Paint.Join.ROUND
+        selectedPaint.strokeCap = Paint.Cap.ROUND
+        selectedPaint.strokeWidth = schemeData.lineWidth
     }
 }

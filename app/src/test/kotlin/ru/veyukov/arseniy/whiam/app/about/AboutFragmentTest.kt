@@ -106,14 +106,6 @@ class AboutFragmentTest {
         assertEquals(expected, actual.text)
     }
 
-    @Test
-    fun testWiFi() {
-        assertEquals(View.VISIBLE, fixture.requireView().findViewById<TextView>(R.id.about_wifi_band_2ghz_success).visibility)
-        assertEquals(View.GONE, fixture.requireView().findViewById<TextView>(R.id.about_wifi_band_5ghz_success).visibility)
-        assertEquals(View.VISIBLE, fixture.requireView().findViewById<TextView>(R.id.about_wifi_band_5ghz_fails).visibility)
-        assertEquals(View.GONE, fixture.requireView().findViewById<TextView>(R.id.about_wifi_band_6ghz_success).visibility)
-        assertEquals(View.VISIBLE, fixture.requireView().findViewById<TextView>(R.id.about_wifi_band_6ghz_fails).visibility)
-    }
 
     @Test
     fun testWriteReview() {
@@ -125,13 +117,6 @@ class AboutFragmentTest {
         assertTrue(actual)
     }
 
-    @Test
-    fun testAlertDialogClickListener() {
-        validateAlertDialogClickListener(R.id.contributors, R.string.about_contributor_title, R.raw.contributors)
-        validateAlertDialogClickListener(R.id.license, R.string.gpl, R.raw.gpl)
-        validateAlertDialogClickListener(R.id.graphViewLicense, R.string.al, R.raw.al)
-        validateAlertDialogClickListener(R.id.materialDesignIconsLicense, R.string.al, R.raw.al)
-    }
 
     private fun version(): String {
         val packageInfo: PackageInfo = fixture.requireActivity().packageInfo()

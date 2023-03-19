@@ -8,7 +8,6 @@ import android.app.SearchManager
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.provider.BaseColumns
-import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.AutoCompleteTextView
@@ -20,6 +19,7 @@ import ru.veyukov.arseniy.whiam.MainContext
 import ru.veyukov.arseniy.whiam.R
 import ru.veyukov.arseniy.whiam.annotation.OpenClass
 import ru.veyukov.arseniy.whiam.util.hideKeyboard
+
 
 @OpenClass
 class OptionMenu {
@@ -44,6 +44,7 @@ class OptionMenu {
             val cursorAdapter = SimpleCursorAdapter(activity.applicationContext, R.layout.search_item, null, from, to, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER)
             val suggestions = MainContext.INSTANCE.scheme.getSearchList()
             searchView?.suggestionsAdapter = cursorAdapter
+            searchView?.setIconified(false);
             searchView?.setOnCloseListener(object : SearchView.OnCloseListener {
                 override fun onClose(): Boolean {
                     return true
@@ -57,13 +58,16 @@ class OptionMenu {
 
                 override fun onQueryTextChange(query: String?): Boolean {
                     val cursor = MatrixCursor(arrayOf(BaseColumns._ID, SearchManager.SUGGEST_COLUMN_TEXT_1))
+                    var idx = -1
                     query?.let {
                         suggestions?.forEachIndexed { index, suggestion ->
-                            if (suggestion.contains(query, true))
+                            if (suggestion.contains(query, true)) {
                                 cursor.addRow(arrayOf(index, suggestion))
+                                idx = index
+                            }
                         }
                     }
-
+                    if (cursor.count == 1) MainContext.INSTANCE.scheme.processSearchResult(idx)
                     cursorAdapter.changeCursor(cursor)
                     return true
                 }

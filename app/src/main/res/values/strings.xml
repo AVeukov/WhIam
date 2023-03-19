@@ -14,6 +14,7 @@
     <string name="navigation_drawer_close">"Close navigation drawer"</string>
     <string name="scanner_message">"Scanning &#8230;"</string>
     <string name="scanner_pause">"Pause"</string>
+    <string name="scanner_path">"Path"</string>
     <string name="scanner_play">"Play"</string>
 
     <!-- action start -->
@@ -145,6 +146,14 @@
     <string name="language_title">"Language"</string>
     <string name="language_summary" translatable="false">"%s"</string>
     <string name="language_key" translatable="false">"language"</string>
+
+    <string name="wifi_data_collection_title">"Wi-Fi data collection"</string>
+    <string name="wifi_data_collection_key" translatable="false">"wifi_data_collection"</string>
+    <bool name="wifi_data_collection_default" translatable="false">false</bool>
+
+    <string name="wifi_data_clear_title">"Clear Wi-Fi data"</string>
+    <string name="wifi_data_clear_key" translatable="false">"wifi_data_clear"</string>
+
     <!-- settings end -->
 
     <!-- about start -->

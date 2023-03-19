@@ -68,13 +68,11 @@
 <!--            app:icon="@drawable/ic_signal_wifi_off"-->
 <!--            app:key="@string/wifi_off_on_exit_key"-->
 <!--            app:title="@string/wifi_off_on_exit_title"/>-->
-
         <androidx.preference.SwitchPreferenceCompat
-            app:defaultValue="@bool/keep_screen_on_default"
-            app:icon="@drawable/ic_brightness_low"
-            app:key="@string/keep_screen_on_key"
-            app:title="@string/keep_screen_on_title"/>
-
+                app:defaultValue="@bool/keep_screen_on_default"
+                app:icon="@drawable/ic_brightness_low"
+                app:key="@string/keep_screen_on_key"
+                app:title="@string/keep_screen_on_title"/>
     </PreferenceCategory>
 
     <PreferenceCategory>
@@ -94,5 +92,15 @@
             app:useSimpleSummaryProvider="true"
             app:title="@string/language_title" />
     </PreferenceCategory>
-
+    <PreferenceCategory>
+        <androidx.preference.SwitchPreferenceCompat
+                app:defaultValue="@bool/wifi_data_collection_default"
+                app:icon="@drawable/ic_wifi_tethering"
+                app:key="@string/wifi_data_collection_key"
+                app:title="@string/wifi_data_collection_title"/>
+    </PreferenceCategory>
+    <Preference
+            app:icon="@drawable/ic_magic_button"
+            app:key="@string/wifi_data_clear_key"
+            app:title="@string/wifi_data_clear_title" />
 </PreferenceScreen>

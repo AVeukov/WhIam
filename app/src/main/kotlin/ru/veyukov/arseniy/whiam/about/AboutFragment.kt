@@ -33,50 +33,18 @@ class AboutFragment : Fragment() {
         val binding: AboutContentBinding = AboutContentBinding.inflate(inflater, container, false)
         val activity: FragmentActivity = requireActivity()
         setTexts(binding, activity)
-        setOnClicks(binding, activity)
-        wiFiState(binding)
         return binding.root
     }
 
     private fun setTexts(binding: AboutContentBinding, activity: FragmentActivity) {
-//        binding.aboutCopyright.text = copyright()
         binding.aboutVersionInfo.text = version(activity)
-//        binding.aboutPackageName.text = activity.packageName
-//        binding.aboutDevice.text = device()
+
     }
 
     private fun device(): String =
         Build.MANUFACTURER + " - " + Build.BRAND + " - " + Build.MODEL
 
-    private fun wiFiState(binding: AboutContentBinding) {
-        val wiFiManagerWrapper = MainContext.INSTANCE.wiFiManagerWrapper
-//        wiFiBand(
-//            wiFiManagerWrapper.is5GHzBandSupported(),
-//            binding.aboutWifiBand5ghzSuccess,
-//            binding.aboutWifiBand5ghzFails
-//        )
-//        wiFiBand(
-//            wiFiManagerWrapper.is6GHzBandSupported(),
-//            binding.aboutWifiBand6ghzSuccess,
-//            binding.aboutWifiBand6ghzFails
-//        )
-    }
 
-//    private fun wiFiBand(bandSupported: Boolean, aboutWifiBandSuccess: TextView, aboutWifiBandFails: TextView) {
-//        if (bandSupported) {
-//            aboutWifiBandSuccess.visibility = View.VISIBLE
-//            aboutWifiBandFails.visibility = View.GONE
-//        } else {
-//            aboutWifiBandSuccess.visibility = View.GONE
-//            aboutWifiBandFails.visibility = View.VISIBLE
-//        }
-//    }
-
-    private fun setOnClicks(binding: AboutContentBinding, activity: FragmentActivity) {
-        val gpl = AlertDialogClickListener(activity, R.string.gpl, R.raw.gpl)
-        val contributors =
-            AlertDialogClickListener(activity, R.string.about_contributor_title, R.raw.contributors, false)
-    }
     private fun version(activity: FragmentActivity): String {
         val configuration = MainContext.INSTANCE.configuration
         return applicationVersion(activity) +
@@ -92,41 +60,6 @@ class AboutFragment : Fragment() {
         } catch (e: NameNotFoundException) {
             String.EMPTY
         }
-
-
-    private class WriteReviewClickListener(private val activity: Activity) : View.OnClickListener {
-        override fun onClick(view: View) {
-            val url = "market://details?id=" + activity.applicationContext.packageName
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            try {
-                activity.startActivity(intent)
-            } catch (e: ActivityNotFoundException) {
-                Toast.makeText(view.context, e.localizedMessage, Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    private class AlertDialogClickListener(
-        private val activity: Activity,
-        private val titleId: Int,
-        private val resourceId: Int,
-        private val isSmallFont: Boolean = true
-    ) : View.OnClickListener {
-        override fun onClick(view: View) {
-            if (!activity.isFinishing) {
-                val text = readFile(activity.resources, resourceId)
-                val alertDialog: AlertDialog = AlertDialog.Builder(view.context)
-                    .setTitle(titleId)
-                    .setMessage(text)
-                    .setNeutralButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
-                    .create()
-                alertDialog.show()
-                if (isSmallFont) {
-                    alertDialog.findViewById<TextView>(android.R.id.message).textSize = 8f
-                }
-            }
-        }
-    }
 
     private fun ifElse(condition: Boolean, value: String) =
         if (condition) {

@@ -8,18 +8,23 @@
             android:icon="@android:drawable/ic_menu_search"
             app:showAsAction="always|collapseActionView"
             app:actionViewClass="androidx.appcompat.widget.SearchView"
+            android:minWidth="0dip"
+            android:padding="0dip"
             android:title="Search"/>
     <item
             android:id="@+id/action_path"
             android:icon="@drawable/ic_path"
-            android:title="@string/scanner_pause"
-            android:minWidth="32dip"
-            android:padding="0dip"
+            android:title="@string/scanner_path"
+            android:minWidth="0dip"
+            android:paddingStart="0dip"
+            android:paddingEnd="0dip"
             app:showAsAction="always|collapseActionView"/>
     <item
         android:id="@+id/action_scanner"
         android:icon="@drawable/ic_pause"
         android:title="@string/scanner_pause"
+        android:minWidth="0dip"
+        android:padding="0dip"
         app:showAsAction="always|collapseActionView"/>
 
 </menu>

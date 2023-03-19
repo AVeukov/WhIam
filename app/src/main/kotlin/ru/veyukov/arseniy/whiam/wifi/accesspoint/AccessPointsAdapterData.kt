@@ -24,7 +24,6 @@ class AccessPointsAdapterData(
         wiFiDetails.addAll(wiFiData.wiFiDetails(predicate, settings.sortBy(), settings.groupBy()))
         accessPointsAdapterGroup.update(wiFiDetails, expandableListView)
     }
-
     fun parentsCount(): Int = wiFiDetails.size
 
     fun parent(index: Int): WiFiDetail = wiFiDetails.getOrNull(index) ?: WiFiDetail.EMPTY

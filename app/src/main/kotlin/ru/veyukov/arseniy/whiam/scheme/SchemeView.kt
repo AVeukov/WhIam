@@ -12,36 +12,37 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.GestureDetectorCompat
 import ru.veyukov.arseniy.whiam.MainContext
+import ru.veyukov.arseniy.whiam.R
+import ru.veyukov.arseniy.whiam.scheme.data.NodeData
+import ru.veyukov.arseniy.whiam.scheme.data.WifiPointData
+import ru.veyukov.arseniy.whiam.wifi.model.WiFiDetail
+import ru.veyukov.arseniy.whiam.wifi.predicate.makeAccessPointsPredicate
+import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SchemeView(context: Context) : View(context) {
     companion object {
         private const val INVALID_ID = -1
     }
 
-    private var buildingID: Int
-    private var floorID: Int
-
     private val scheme = MainContext.INSTANCE.scheme
     private val schemeData = scheme.schemeData!!
     private val paints = SchemeViewPaints(schemeData)
+
+    private val settings = MainContext.INSTANCE.settings
 
     private var mDeltaX = 0F
     private var mDeltaY = 0F
     private var mLastTouchX = 0F
     private var mLastTouchY = 0F
+    private var mFocusX = 0f
+    private var mFocusY = 0f
     private var mScaleFactor = 1f
     private var mSchemeScale = schemeData.scale
     private var mActivePointerId = Companion.INVALID_ID
-    private var mSelectedRoomID: Int = Companion.INVALID_ID
-    private var mSelectedPoint: Int = 4005
-    private var mPathPoint = ArrayList<Int>()
 
     init {
         setBackgroundColor(Color.GRAY)
-        buildingID = scheme.currentBuilding
-        floorID = scheme.currentFloor
     }
 
     val doubleTapListener = object : GestureDetector.SimpleOnGestureListener() {
@@ -49,13 +50,28 @@ class SchemeView(context: Context) : View(context) {
             mDeltaX = 0F
             mDeltaY = 0F
             mScaleFactor = 1f
+            mFocusX = 0F
+            mFocusY = 0F
             invalidate()
             return true
         }
 
         override fun onLongPress(e: MotionEvent) {
-            val text = this@SchemeView.getSelectedInfo(e.x, e.y)
+            var text = ""
+            if (!settings.wifiDataCollection()) {
+                text = this@SchemeView.getSelectedInfo(e.x, e.y)
+            } else {
+                text = "x = " + reverseCalcX(e.x).toString() + "\n" + "y = " + reverseCalcY(e.y).toString()
+                scheme.addNodeToList(
+                    NodeData(
+                        scheme.nodeList.size + 1,
+                        arrayListOf(reverseCalcX(e.x), reverseCalcY(e.y)),
+                        scheme.getWiFiPoints()
+                    )
+                )
+            }
             if (text != "") Toast.makeText(context, text, Toast.LENGTH_LONG).show()
+
         }
     }
     val detector = GestureDetectorCompat(context, doubleTapListener)
@@ -64,11 +80,19 @@ class SchemeView(context: Context) : View(context) {
     @SuppressLint("DrawAllocation")
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        buildingID = scheme.currentBuilding
-        floorID = scheme.currentFloor
-
-        //canvas.drawText(Date().toString(), 10F, 100F, paints.tempPaint)
+        val wiFiPoints = scheme.getWiFiPoints()
+        var text = SimpleDateFormat("HH:mm:ss").format(Date())
+        canvas.drawText(text, 10F, 50F, paints.tempPaint)
+        if (settings.wifiDataCollection()) {
+            if (wiFiPoints.isEmpty()) {
+                text = R.string.no_data.toString()
+            } else {
+                text = wiFiPoints[0].sid + "(" + wiFiPoints[0].mac + ")"
+            }
+            canvas.drawText(text, 10F, 100F, paints.tempPaint)
+            text = wiFiPoints[0].dBm.toString() + "дБ"
+            canvas.drawText(text, 10F, 150F, paints.tempPaint)
+        }
         if (mDeltaY == 0F) {
             if (schemeData.height * mSchemeScale < canvas.height) {
                 mDeltaY = (canvas.height - schemeData.height * mSchemeScale) / 2
@@ -79,32 +103,50 @@ class SchemeView(context: Context) : View(context) {
         }
         canvas?.apply {
             save()
-            scale(mScaleFactor, mScaleFactor, canvas.width.toFloat() / 2, canvas.height.toFloat() / 2)
+            scale(mScaleFactor, mScaleFactor, mFocusX, mFocusY)
             drawHalls(canvas)
             drawRooms(canvas)
             drawPartitions(canvas)
             drawStairs(canvas)
             drawDoors(canvas)
-            drawCurrentPosition(canvas)
-            //drawPath(calcPath(),paints.pathPaint)
-
+            if (settings.wifiDataCollection()) {
+                drawNodes(canvas)
+            } else {
+                drawPath(calcPath(), paints.pathPaint)
+                drawCurrentPosition(canvas)
+            }
             restore()
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun drawCurrentPosition(canvas: Canvas) {
-        if (mSelectedPoint != INVALID_ID) {
-            val node = schemeData.buildings[buildingID].floors[floorID].nodes.stream().filter{ n-> n.id == mSelectedPoint }.findFirst().orElse(null);
+        if (scheme.currentPosition != INVALID_ID) {
+            val node =
+                schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].nodes.stream()
+                    .filter { n -> n.id == scheme.currentPosition }
+                    .findFirst().orElse(null);
             val x = calcX(node.xy[0])
             val y = calcY(node.xy[1])
-            canvas.drawCircle(x, y, mScaleFactor * 10F, paints.selectedPaint)
-            canvas.drawCircle(x, y, mScaleFactor * 30F, paints.pathPaint)
+            canvas.drawCircle(x, y, mSchemeScale * 3F, paints.selectedPaint)
+            canvas.drawCircle(x, y, mSchemeScale * 10F, paints.pathPaint)
+        }
+    }
+
+    private fun drawNodes(canvas: Canvas) {
+        if (scheme.nodeList.isEmpty()) {
+            return
+        }
+        scheme.nodeList.forEach {
+            val x = calcX(it.xy[0])
+            val y = calcY(it.xy[1])
+            canvas.drawCircle(x, y, mSchemeScale * 1F, paints.tempPaint)
+            canvas.drawText(it.id.toString(), x, y, paints.tempPaint)
         }
     }
 
     private fun drawPartitions(canvas: Canvas) {
-        schemeData.buildings[buildingID].floors[floorID].partitions.forEach {
+        schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].partitions.forEach {
             canvas.drawLine(
                 calcX(it.walls[0]),
                 calcY(it.walls[1]),
@@ -116,7 +158,7 @@ class SchemeView(context: Context) : View(context) {
     }
 
     private fun drawHalls(canvas: Canvas) {
-        schemeData.buildings[buildingID].floors[floorID].halls.forEach {
+        schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].halls.forEach {
             canvas.drawRect(
                 calcX(it.walls[0]),
                 calcY(it.walls[1]),
@@ -129,8 +171,8 @@ class SchemeView(context: Context) : View(context) {
 
     private fun drawRooms(canvas: Canvas) {
         val bounds = Rect()
-        schemeData.buildings[buildingID].floors[floorID].rooms.forEachIndexed { index, it ->
-            if (mSelectedRoomID == index)
+        schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].rooms.forEachIndexed { index, it ->
+            if (scheme.targetRoom == index)
                 canvas.drawRect(
                     calcX(it.walls[0]),
                     calcY(it.walls[1]),
@@ -168,7 +210,7 @@ class SchemeView(context: Context) : View(context) {
 
     private fun drawStairs(canvas: Canvas) {
         val bounds = Rect()
-        schemeData.buildings[buildingID].floors[floorID].stairs.forEach {
+        schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].stairs.forEach {
             canvas.drawRect(
                 calcX(it.walls[0]),
                 calcY(it.walls[1]),
@@ -201,14 +243,14 @@ class SchemeView(context: Context) : View(context) {
     }
 
     private fun drawDoors(canvas: Canvas) {
-        schemeData.buildings[buildingID].floors[floorID].rooms.forEach {
+        schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].rooms.forEach {
             if (!it.doors.isEmpty()) {
                 canvas.drawLine(
                     calcX(it.doors[0]), calcY(it.doors[1]), calcX(it.doors[2]), calcY(it.doors[3]), paints.backPaint
                 )
             }
         }
-        schemeData.buildings[buildingID].floors[floorID].partitions.forEach {
+        schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].partitions.forEach {
             if (!it.doors.isEmpty()) {
                 canvas.drawLine(
                     calcX(it.doors[0]), calcY(it.doors[1]), calcX(it.doors[2]), calcY(it.doors[3]), paints.backPaint
@@ -225,12 +267,26 @@ class SchemeView(context: Context) : View(context) {
         return height - (y * mSchemeScale + mDeltaY)
     }
 
+    private fun reverseCalcX(x: Float): Int {
+        return ((((x - (1 - mScaleFactor) * mFocusX) / mScaleFactor) - mDeltaX) / mSchemeScale).toInt()
+    }
+
+    private fun reverseCalcY(y: Float): Int {
+        return ((height - ((y - (1 - mScaleFactor) * mFocusY) / mScaleFactor) - mDeltaY) / mSchemeScale).toInt()
+    }
+
     private val scaleListener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
         override fun onScale(detector: ScaleGestureDetector): Boolean {
             mScaleFactor *= detector.scaleFactor
             mScaleFactor = Math.max(0.1f, Math.min(mScaleFactor, 5.0f))
             invalidate()
+            return true
+        }
+
+        override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+            mFocusX = detector.focusX
+            mFocusY = detector.focusY
             return true
         }
     }
@@ -276,14 +332,14 @@ class SchemeView(context: Context) : View(context) {
 
     private fun getSelectedInfo(x: Float, y: Float): String {
         var result = ""
-        mSelectedRoomID = Companion.INVALID_ID
-        schemeData.buildings[buildingID].floors[floorID].rooms.forEachIndexed { index, r ->
+        scheme.targetRoom = Companion.INVALID_ID
+        schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].rooms.forEachIndexed { index, r ->
             if ((calcX(r.walls[0]) <= x) and
                 (calcX(r.walls[2]) >= x) and
                 (calcY(r.walls[1]) >= y) and
                 (calcY(r.walls[3]) <= y)
             ) {
-                mSelectedRoomID = index
+                scheme.targetRoom = index
                 result = r.nameRoom + " - " + r.descriptionRoom
             }
         }
@@ -293,19 +349,33 @@ class SchemeView(context: Context) : View(context) {
     @RequiresApi(Build.VERSION_CODES.N)
     fun calcPath(): Path {
         var path = Path()
-        val pathPoints = arrayListOf<Int>( 4004,4006,4008,4012,4013,4014,4015, 4017)
+        if (scheme.currentPosition == INVALID_ID) return path
+        val pathPoints = scheme.getPathPoints()
+        if (pathPoints.size <= 1) {
+            //Toast.makeText(context, "Вы на месте", Toast.LENGTH_LONG).show()
+            return path
+        }
         path.reset();
-        val startNode = schemeData.buildings[buildingID].floors[floorID].nodes.stream().filter{ n-> n.id == mSelectedPoint }.findFirst().orElse(null);
+        val startNode =
+            schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].nodes.stream()
+                .filter { n -> n.id == scheme.currentPosition }
+                .findFirst().orElse(null);
         path.moveTo(
             calcX(startNode.xy[0]),
             calcY(startNode.xy[1])
         )
+        var addPath = false
         pathPoints.forEach {
-            val node = schemeData.buildings[buildingID].floors[floorID].nodes.stream().filter{ n-> n.id == it }.findFirst().orElse(null);
+            if (it == scheme.currentPosition) addPath = true
+            if (!addPath) return@forEach
+            if (pathPoints[pathPoints.lastIndex] == scheme.currentPosition) return@forEach
+            val node =
+                schemeData.buildings[scheme.currentBuilding].floors[scheme.currentFloor].nodes.stream().filter { n -> n.id == it }.findFirst()
+                    .orElse(null);
             path.lineTo(
-                    calcX(node.xy[0]),
-                    calcY(node.xy[1])
-                )
+                calcX(node.xy[0]),
+                calcY(node.xy[1])
+            )
         }
         path.moveTo(
             calcX(startNode.xy[0]),
@@ -315,7 +385,9 @@ class SchemeView(context: Context) : View(context) {
         return path
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun redraw() {
+        scheme.recalcCurrentPosition()
         invalidate()
 
     }
