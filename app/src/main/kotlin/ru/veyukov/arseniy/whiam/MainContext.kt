@@ -17,30 +17,32 @@ import ru.veyukov.arseniy.whiam.wifi.scanner.makeScannerService
 enum class MainContext {
     INSTANCE;
 
-    lateinit var settings: Settings
-    lateinit var mainActivity: MainActivity
-    lateinit var wiFiManagerWrapper: WiFiManagerWrapper
-    lateinit var scannerService: ScannerService
-    lateinit var configuration: Configuration
-    lateinit var scheme: Scheme
+    lateinit var settings: Settings // настройки
+    lateinit var mainActivity: MainActivity // основной Activity
+    lateinit var wiFiManagerWrapper: WiFiManagerWrapper // оболочка для WiFiManager
+    lateinit var scannerService: ScannerService // сервис сканирования
+    lateinit var configuration: Configuration // конфигурация
+    lateinit var scheme: Scheme // Схема
 
-    val context: Context
+    val context: Context // основной контекст Activity
         get() = mainActivity.applicationContext
 
-    val resources: Resources
+    val resources: Resources // ресурсы
         get() = context.resources
 
-    val layoutInflater: LayoutInflater
+    val layoutInflater: LayoutInflater //автоматически присоединяет элементы интерфейса
         get() = mainActivity.layoutInflater
 
-    private val wiFiManager: WifiManager
+    private val wiFiManager: WifiManager // менеджер работы с Wi-FI - системный сервис
         get() = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
-    fun initialize(activity: MainActivity, largeScreen: Boolean) {
+    fun initialize(activity: MainActivity, largeScreen: Boolean) { //инициализация
+        // создаем и присваиваем объекты
         mainActivity = activity
         configuration = Configuration(largeScreen)
         settings = Settings(Repository(context))
         wiFiManagerWrapper = WiFiManagerWrapper(wiFiManager)
+        //сервис периодического сканирования
         scannerService = makeScannerService(mainActivity, wiFiManagerWrapper, Handler(Looper.getMainLooper()), settings)
         scheme=Scheme(activity.resources)
     }

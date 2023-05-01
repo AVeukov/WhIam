@@ -29,54 +29,57 @@ import ru.veyukov.arseniy.whiam.wifi.scanner.ScannerService
 
 @OpenClass
 class MainActivity : AppCompatActivity(), NavigationMenuControl, OnSharedPreferenceChangeListener {
-    internal lateinit var drawerNavigation: DrawerNavigation
-    internal lateinit var mainReload: MainReload
-    internal lateinit var navigationMenuController: NavigationMenuController
-    internal lateinit var optionMenu: OptionMenu
-    internal lateinit var permissionService: PermissionService
+    internal lateinit var drawerNavigation: DrawerNavigation // боковая панель
+    internal lateinit var mainReload: MainReload // клас отвечающий за обновление при смене темы или языка приложения
+    internal lateinit var navigationMenuController: NavigationMenuController // меню навигации
+    internal lateinit var optionMenu: OptionMenu // верхнее меню (старт/пауза, путь, поиск)
+    internal lateinit var permissionService: PermissionService // сервис разрешений
     //internal lateinit var connectionView: ConnectionView
 
-    private var currentCountryCode: String = String.EMPTY
+    private var currentCountryCode: String = String.EMPTY // КОД СТРАНЫ
 
     override fun attachBaseContext(newBase: Context) =
         super.attachBaseContext(newBase.createContext(Settings(Repository(newBase)).languageLocale()))
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) { // создание
 
-        val mainContext = MainContext.INSTANCE
-        mainContext.initialize(this, largeScreen)
+        val mainContext = MainContext.INSTANCE // основной контекст
+        mainContext.initialize(this, largeScreen) //инициализация
 
+        // настройки
         val settings = mainContext.settings
-        settings.initializeDefaultValues()
-        setTheme(settings.themeStyle().themeNoActionBar)
+        settings.initializeDefaultValues() // начальные значения
+        setTheme(settings.themeStyle().themeNoActionBar) // тема
         setWiFiChannelPairs(mainContext)
 
-        val scheme=mainContext.scheme
-        scheme.readSchemeJson(R.raw.schema)
+        val scheme=mainContext.scheme // схема
+        scheme.readSchemeJson(R.raw.schema) // чтение схемы из JSON файла
 
-        mainReload = MainReload(settings)
+        mainReload = MainReload(settings) // клас отвечающий за обновление при смене темы или языка приложения
 
         super.onCreate(savedInstanceState)
-        installSplashScreen()
-        setContentView(R.layout.main_activity)
+        installSplashScreen() // начальный экран, показывается пока приложение запускается
+        setContentView(R.layout.main_activity) // основное View
 
-        settings.registerOnSharedPreferenceChangeListener(this)
-        optionMenu = OptionMenu()
+        settings.registerOnSharedPreferenceChangeListener(this) // обработчиком при изменении настроек будет этот класс
+        optionMenu = OptionMenu() // меню - верхнее (старт/пауза, путь, поиск)
 
-        keepScreenOn()
+        keepScreenOn() // экран всегда включен
 
-        val toolbar = setupToolbar()
+        val toolbar = setupToolbar() // боковая панель
         drawerNavigation = DrawerNavigation(this, toolbar)
         drawerNavigation.create()
 
+        // навигационное меню
         navigationMenuController = NavigationMenuController(this)
         navigationMenuController.currentNavigationMenu(settings.selectedMenu())
         onNavigationItemSelected(currentMenuItem())
 
         //connectionView = ConnectionView(this)
-
+        // сервис разрешений
         permissionService = PermissionService(this)
 
+        // обработчик нажатия кнопки Назад
         onBackPressedDispatcher.addCallback(this, MainActivityBackPressed(this))
     }
 

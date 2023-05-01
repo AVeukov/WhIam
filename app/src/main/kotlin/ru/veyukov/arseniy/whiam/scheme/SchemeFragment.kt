@@ -29,21 +29,39 @@ class SchemeFragment : Fragment(), OnRefreshListener {
         swipeRefreshLayout.isEnabled = false
         swipeRefreshLayout.setSize(0)
         schemeAdapter = SchemeAdapter(schemeView!!)
-         return view
+//        try {
+//            val f: Field = swipeRefreshLayout.javaClass.getDeclaredField("mCircleView")
+//            f.setAccessible(true)
+//            val img: ImageView = f.get(swipeRefreshLayout) as ImageView
+//            img.setAlpha(0.0f)
+//        } catch (e: NoSuchFieldException) {
+//            e.printStackTrace()
+//        } catch (e: IllegalAccessException) {
+//            e.printStackTrace()
+//        }
+        return view
     }
-    override fun onRefresh() {
+    override fun onRefresh() { // метод интерфейса OnRefreshListener
+        // обновление
         swipeRefreshLayout.isRefreshing = true
+        // обновляем адаптеры зарегистрированные в периодическом сервисе сканирования
         MainContext.INSTANCE.scannerService.update()
         swipeRefreshLayout.isRefreshing = false
     }
 
-    override fun onResume() {
+    override fun onResume() { // метод интерфейса OnRefreshListener
+        //возобновление работы
+        // срабатывает при переходе на фрагмент
         super.onResume()
+        // регистрируем адаптер в периодическом сервисе сканирования
         MainContext.INSTANCE.scannerService.register(schemeAdapter)
         onRefresh()
     }
 
-    override fun onPause() {
+    override fun onPause() { // метод интерфейса OnRefreshListener
+        // пауза, срабатывает после ухода на другой экран
+        // разрегистрируем адаптер в периодическом сервисе сканирования
+        // чтобы он не срабатывал
         MainContext.INSTANCE.scannerService.unregister(schemeAdapter)
         super.onPause()
     }

@@ -14,7 +14,7 @@ import java.util.*
 class Export(private val exportIntent: ExportIntent = ExportIntent()) {
 
     fun export(mainActivity: MainActivity, nodes: List<NodeData>): Intent =
-            export(mainActivity, nodes, Date())
+        export(mainActivity, nodes, Date())
 
     fun export(mainActivity: MainActivity, nodes: List<NodeData>, date: Date): Intent {
         val timestamp: String = timestamp(date)
